@@ -1,0 +1,192 @@
+[
+    {
+        "id": "3aed997de2f847cd",
+        "type": "tab",
+        "label": "Painel Mottu IoT",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "00cc704809e57e9b",
+        "type": "mqtt in",
+        "z": "3aed997de2f847cd",
+        "name": "Receber dados ESP32",
+        "topic": "esp32/status",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "aeedd885237de827",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 360,
+        "y": 270,
+        "wires": [
+            [
+                "d9e5d4b91b7e5a15"
+            ]
+        ]
+    },
+    {
+        "id": "d9e5d4b91b7e5a15",
+        "type": "function",
+        "z": "3aed997de2f847cd",
+        "name": "Processar dados",
+        "func": "let texto = msg.payload.trim();\n\nlet vagaOcupada = texto.includes('OCUPADA');\nlet motoManutencao = texto.includes('MANUTENCAO');\n\nmsg.payload = {\n    vaga: vagaOcupada ? 'Ocupada' : 'Livre',\n    corVaga: vagaOcupada ? '#ff4d4d' : '#00cc44',\n    moto: motoManutencao ? 'Em manutenção' : 'Em bom estado',\n    corMoto: motoManutencao ? '#ffcc00' : '#00cc44'\n};\n\nreturn [msg];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 270,
+        "wires": [
+            [
+                "f40e003aeeaa03ed",
+                "e90b3c1ddbce7bbf",
+                "8fd4d2283b20d80b",
+                "d7657539f75b50e7"
+            ]
+        ]
+    },
+    {
+        "id": "f40e003aeeaa03ed",
+        "type": "ui_text",
+        "z": "3aed997de2f847cd",
+        "group": "4d7cf488f49e63ea",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "Estado da Vaga",
+        "label": "🚗 Estado da Vaga:",
+        "format": "{{msg.payload.vaga}}",
+        "layout": "row-center",
+        "x": 890,
+        "y": 230,
+        "wires": []
+    },
+    {
+        "id": "e90b3c1ddbce7bbf",
+        "type": "ui_text",
+        "z": "3aed997de2f847cd",
+        "group": "4d7cf488f49e63ea",
+        "order": 2,
+        "width": 6,
+        "height": 1,
+        "name": "Estado da Moto",
+        "label": "🏍️ Estado da Moto:",
+        "format": "{{msg.payload.moto}}",
+        "layout": "row-center",
+        "x": 890,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "8fd4d2283b20d80b",
+        "type": "ui_chart",
+        "z": "3aed997de2f847cd",
+        "name": "Histórico de Estados",
+        "group": "cfa392e5700d5245",
+        "order": 1,
+        "width": 12,
+        "height": 5,
+        "label": "📊 Histórico de Ocupação e Manutenção",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Aguardando dados...",
+        "dot": true,
+        "ymin": "0",
+        "ymax": "2",
+        "removeOlder": "30",
+        "removeOlderUnit": "60",
+        "colors": [
+            "#ff0000",
+            "#00ff00"
+        ],
+        "outputs": 1,
+        "x": 900,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d7657539f75b50e7",
+        "type": "ui_template",
+        "z": "3aed997de2f847cd",
+        "group": "4d7cf488f49e63ea",
+        "name": "Indicadores coloridos",
+        "order": 3,
+        "width": 12,
+        "height": 2,
+        "format": "<div style=\"text-align:center;\">\n    <div style=\"display:inline-block; margin:20px;\">\n        <div style=\"background-color: {{msg.payload.corVaga}}; width:80px; height:80px; border-radius:50%; margin:auto;\"></div>\n        <p style=\"font-size:16px; font-weight:bold;\">Vaga</p>\n    </div>\n    <div style=\"display:inline-block; margin:20px;\">\n        <div style=\"background-color: {{msg.payload.corMoto}}; width:80px; height:80px; border-radius:50%; margin:auto;\"></div>\n        <p style=\"font-size:16px; font-weight:bold;\">Moto</p>\n    </div>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 900,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aeedd885237de827",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": 1883,
+        "clientid": "mottu-iot-esp32",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "4d7cf488f49e63ea",
+        "type": "ui_group",
+        "name": "Status Atual",
+        "tab": "44344b76df9208fe",
+        "order": 1,
+        "disp": true,
+        "width": 12
+    },
+    {
+        "id": "cfa392e5700d5245",
+        "type": "ui_group",
+        "name": "Histórico e Alertas",
+        "tab": "44344b76df9208fe",
+        "order": 2,
+        "disp": true,
+        "width": 12
+    },
+    {
+        "id": "44344b76df9208fe",
+        "type": "ui_tab",
+        "name": "📍 Painel de Controle Mottu",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
