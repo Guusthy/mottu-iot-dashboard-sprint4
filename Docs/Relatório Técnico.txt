@@ -1,0 +1,19 @@
+Relatório Técnico - Projeto IoT Mottu
+
+ Objetivo
+Desenvolver um protótipo IoT que simula o controle de vagas e manutenção de motos da Mottu, integrando sensores, atuadores e visualização em tempo real via Node-RED.
+
+ Tecnologias
+- ESP32
+- Sensor ultrassônico HC-SR04
+- LEDs, botão
+- Protocolo MQTT
+- Node-RED Dashboard
+- Broker: test.mosquitto.org
+- Plataforma de simulação: Wokwi
+
+ Fluxo de dados
+1. O sensor mede a distância e indica se a vaga está ocupada.
+2. O botão alterna o estado de manutenção da moto.
+3. Os dados são publicados via MQTT.
+4. O Node-RED recebe e exibe no dashboard.
