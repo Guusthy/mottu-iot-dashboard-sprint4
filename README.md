@@ -40,8 +40,7 @@ Estrutura do Projeto
 ### 2. Dashboard no Node-RED
 1. Abra o Node-RED localmente
 2. Vá em **Menu → Importar → Colar o conteúdo de `flow.json`**
-3. Configure o broker como `test.mosquitto.org` (porta 1883)
-4. Clique em **Deploy**
+3. Clique em **Deploy**
 
 ##  Resultados Parciais
 
