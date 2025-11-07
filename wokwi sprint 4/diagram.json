@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "author": "Gustavo Roberto",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-led", "id": "led1", "top": -90, "left": 138.2, "attrs": { "color": "red" } },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": -90,
+      "left": 195.8,
+      "attrs": { "color": "green" }
+    },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "ultrasonic1",
+      "top": -94.5,
+      "left": -234.5,
+      "attrs": { "distance": "366" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": -15.8,
+      "left": 123.95,
+      "rotate": 270,
+      "attrs": { "value": "220000" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": -15.8,
+      "left": 181.55,
+      "rotate": 270,
+      "attrs": { "value": "220000" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led3",
+      "top": -90,
+      "left": 282.2,
+      "attrs": { "color": "yellow" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led4",
+      "top": -90,
+      "left": 339.8,
+      "attrs": { "color": "limegreen" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r3",
+      "top": -15.8,
+      "left": 267.95,
+      "rotate": 270,
+      "attrs": { "value": "220000" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r4",
+      "top": -15.8,
+      "left": 325.55,
+      "rotate": 270,
+      "attrs": { "value": "220000" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": -118.6,
+      "left": 19.2,
+      "attrs": { "color": "green", "xray": "1" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "ultrasonic1:VCC", "esp:5V", "black", [ "v0" ] ],
+    [ "ultrasonic1:GND", "esp:GND.2", "black", [ "v0", "h238.8" ] ],
+    [ "ultrasonic1:TRIG", "esp:12", "green", [ "v0" ] ],
+    [ "ultrasonic1:ECHO", "esp:14", "green", [ "v0" ] ],
+    [ "led1:C", "r1:2", "green", [ "v0" ] ],
+    [ "led2:C", "r2:2", "green", [ "v0" ] ],
+    [ "led3:C", "r3:2", "green", [ "v0" ] ],
+    [ "led4:C", "r4:2", "green", [ "v0" ] ],
+    [ "r1:1", "esp:GND.2", "black", [ "h0", "v19.2" ] ],
+    [ "r2:1", "esp:GND.2", "black", [ "h0", "v19.2" ] ],
+    [ "r3:1", "esp:GND.2", "black", [ "h0", "v9.6" ] ],
+    [ "r4:1", "esp:GND.2", "black", [ "h0", "v9.6" ] ],
+    [ "led1:A", "esp:13", "green", [ "v278.4", "h-182.4", "v-67.2" ] ],
+    [ "esp:27", "led2:A", "green", [ "h-33.41", "v115.2", "h249.6" ] ],
+    [ "esp:22", "led3:A", "green", [ "h216.04" ] ],
+    [ "esp:4", "led4:A", "green", [ "h177.64" ] ],
+    [ "btn1:1.r", "esp:23", "green", [ "v0", "h29", "v144" ] ],
+    [ "btn1:2.r", "esp:GND.2", "black", [ "h0" ] ]
+  ],
+  "dependencies": {}
+}
